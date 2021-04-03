@@ -8,7 +8,7 @@ svn co https://svn.netlabs.org/repos/kbuild/trunk/
 #
 # Apply patches.
 #
-cp patches/env.sh trunk/kBuild/
+cp -R patches/* trunk
 
 #
 # Install missing dependencies.
@@ -27,7 +27,11 @@ kBuild/env.sh --full --debug-script
 #
 pushd src/kmk
 autoreconf -i
-mkdir obj && cd obj
+if [ -d obj ]
+then cd obj
+else mkdir obj && cd obj
+fi
 ../configure
+make
 popd
 popd # trunk
